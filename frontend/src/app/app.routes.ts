@@ -25,7 +25,7 @@ export const routes: Routes = [
   },
   {
     path: 'protegida',
-    canActivateChild : [authenticatedGuard],
+    //canActivateChild : [authenticatedGuard],
     loadComponent: () => import('./layouts/authed/authed.layout').then((m) => m.AuthedLayout),
     children: [
       {
@@ -53,6 +53,12 @@ export const routes: Routes = [
             loadComponent: () =>
               import('./routes/protegida/usuarios/pages/usuarios-modificar/usuarios-modificar.page').then((m) => m.UsuariosModificarPage),
           },
+          {
+            path: 'localidades-list',
+            loadComponent: () =>
+              import('./routes/protegida/localidades/pages/localidades-list/localidades-list.page').then((m) => m.LocalidadesListPage),
+          },
+          
         ]
       },
     ]

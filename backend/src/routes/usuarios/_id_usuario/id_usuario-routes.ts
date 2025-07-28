@@ -1,4 +1,6 @@
 import { FastifyPluginAsyncTypebox } from '@fastify/type-provider-typebox';
+import { usuarioRepository } from '../../../services/usuario.repository.js';
+import { Usuario, UsuarioId, UsuarioIdType } from '../../../schemas/usuario.js';
 
 const usuariosRoutes: FastifyPluginAsyncTypebox = async (fastify, opts): Promise<void> => {
 
@@ -7,12 +9,23 @@ const usuariosRoutes: FastifyPluginAsyncTypebox = async (fastify, opts): Promise
       tags: ["usuarios"],
       summary: "Obtener usuario",
       description : "Obtener el usuario a partir de su id",
+      params: UsuarioId,
+      response: {
+        200: {
+          type: "object",
+          properties: Usuario.properties,
+        },
+        404: {
+          description: "Usuario no encontrado",
+        },
+      },
       security: [
         { bearerAuth: [] }
       ]
     },
     handler: async function (request, reply) {
-      throw new Error("No implementado");
+      const { id_usuario } = request.params as UsuarioIdType
+      return usuarioRepository.getById(id_usuario);
     }
   })
 
@@ -26,7 +39,8 @@ const usuariosRoutes: FastifyPluginAsyncTypebox = async (fastify, opts): Promise
       ]
     },
     handler: async function (request, reply) {
-      throw new Error("No implementado");
+      const { id_usuario } = request.params as UsuarioIdType
+      return usuarioRepository.getDepartamentos(id_usuario);
     }
   })
   

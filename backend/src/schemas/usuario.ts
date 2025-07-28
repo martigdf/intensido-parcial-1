@@ -23,12 +23,24 @@ export const Login = Type.Object({
 
 export type Login = Static<typeof Login>;
 
+export const UsuarioId = Type.Object({
+  id_usuario: Type.Number()
+})
+
 export const Usuario = Type.Object({
   id_usuario: Type.Optional(Type.Integer()),
   nombre : Type.String(),
-  roles :Type.Array(Type.String())
+  roles: Type.Array(Type.String())
 });
+
+export const UsuarioPost = Type.Object({
+    nombre: Type.String(),
+    roles :Type.Array(Type.String())
+});
+
 export type Usuario = Static<typeof Usuario>;
+export type UsuarioPostType = Static<typeof UsuarioPost>
+export type UsuarioIdType = Static<typeof UsuarioId>
 
 //Si quiero agregar los esquemas a fastify de antemano para poder usar ref.
 export default fp(async (fastify) => {

@@ -1,5 +1,6 @@
-import { FastifyPluginAsyncTypebox } from '@fastify/type-provider-typebox';
+import { FastifyPluginAsyncTypebox, Type } from '@fastify/type-provider-typebox';
 import { usuarioRepository } from '../../services/usuario.repository.js';
+import { Usuario, UsuarioPost, UsuarioPostType } from '../../schemas/usuario.js';
 
 const usuariosRoutes: FastifyPluginAsyncTypebox = async (fastify, opts): Promise<void> => {
   
@@ -8,6 +9,9 @@ const usuariosRoutes: FastifyPluginAsyncTypebox = async (fastify, opts): Promise
       tags: ["usuarios"],
       summary: "Obtener listado de usuarios",
       description : "Obtener listado de usuarios",
+      response: {
+        200: Type.Array(Usuario)
+      },
       security: [
         { bearerAuth: [] }
       ]
@@ -17,17 +21,19 @@ const usuariosRoutes: FastifyPluginAsyncTypebox = async (fastify, opts): Promise
     }
   })
 
-  fastify.patch('/', {
+  fastify.patch('/register', {
     schema: {
       tags: ["usuarios"],
       summary: "Crear usuario",
+      body: UsuarioPost,
       description : "Crear usuario",
       security: [
         { bearerAuth: [] }
       ]
     },
     handler: async function (request, reply) {
-      throw new Error("No implementado.");
+      //const { nombre } = request.params as UsuarioPostType
+      //return usuarioRepository.create(id_usuario);
     }
   })
 

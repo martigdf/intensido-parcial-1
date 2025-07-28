@@ -5,7 +5,13 @@ export const Departamento = Type.Object({
   id_departamento: Type.Integer(),
   nombre : Type.String()
 });
+
+export const DepartamentoId = Type.Object({
+  id_departamento: Type.Integer(),
+});
+
 export type Departamento = Static<typeof Departamento>;
+export type DepartamentoIdType = Static<typeof DepartamentoId>;
 
 //Si quiero agregar los esquemas a fastify de antemano para poder usar ref.
 export default fp(async (fastify) => {

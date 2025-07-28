@@ -44,3 +44,11 @@ const pgConfig : PoolConfig = {
 }
 
 export const myPool = new Pool(pgConfig);
+
+export const query = async (text: string, params?: (string|number|string[]|number[])[]) => {
+    // const start = Date.now()
+    const res = await myPool.query(text, params)
+    // const duration = Date.now() - start
+    // console.log('executed query', { text, duration, rows: res.rowCount })
+    return res
+}

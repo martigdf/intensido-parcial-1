@@ -1,6 +1,6 @@
 import { FastifyPluginAsyncTypebox } from '@fastify/type-provider-typebox';
 import { departamentoRepository } from '../../services/departamentos.repository.js';
-import { Departamento } from '../../schemas/departamento.js';
+import { Departamento, DepartamentoId, DepartamentoIdType } from '../../schemas/departamento.js';
 import { Type } from '@sinclair/typebox';
 
 const departamentoRoutes: FastifyPluginAsyncTypebox = async (fastify, opts): Promise<void> => {
@@ -10,6 +10,16 @@ const departamentoRoutes: FastifyPluginAsyncTypebox = async (fastify, opts): Pro
       tags: ["departamentos"],
       summary: "Obtener listado de departamentos",
       description : "Obtener listado de departamentos",
+      params: DepartamentoId,
+      response: {
+        200: {
+          type: "object",
+          properties: Departamento.properties,
+          },
+          404: {
+        description: "Usuario no encontrado",
+        },
+      },
       security: [
         { bearerAuth: [] }
       ]
@@ -33,7 +43,8 @@ const departamentoRoutes: FastifyPluginAsyncTypebox = async (fastify, opts): Pro
       ]
     },
     handler: async function (request, reply) {
-      throw new Error("No implementado");
+      const { id_departamento } = request.params as DepartamentoIdType
+      return departamentoRepository.getById(id_departamento);
     }
   })
 
@@ -47,7 +58,8 @@ const departamentoRoutes: FastifyPluginAsyncTypebox = async (fastify, opts): Pro
       ]
     },
     handler: async function (request, reply) {
-      throw new Error("No implementado");
+      const { id_departamento } = request.params as DepartamentoIdType
+      return departamentoRepository.getLocalidades(id_departamento);
     }
   })
 
