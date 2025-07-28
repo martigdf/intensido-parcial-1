@@ -54,13 +54,28 @@ export const routes: Routes = [
               import('./routes/protegida/usuarios/pages/usuarios-modificar/usuarios-modificar.page').then((m) => m.UsuariosModificarPage),
           },
           {
+            path: 'usuarios-localidades-list',
+            loadComponent: () =>
+              import('./routes/protegida/usuarios/pages/usuarios-localidades/usuarios-localidades.page').then((m) => m.UsuariosLocalidadesPage),
+          },
+          {
+            path: 'usuarios-profile',
+            loadComponent: () =>
+              import('./routes/protegida/usuarios/pages/usuarios-profile/usuario-profile/usuario-profile.page').then((m) => m.UsuarioProfilePage),
+          }
+
+        ]
+      },
+      {
+        path: 'localidades',
+        children : [
+          {
             path: 'localidades-list',
             loadComponent: () =>
               import('./routes/protegida/localidades/pages/localidades-list/localidades-list.page').then((m) => m.LocalidadesListPage),
           },
-          
         ]
-      },
+       },
     ]
   },
 ];

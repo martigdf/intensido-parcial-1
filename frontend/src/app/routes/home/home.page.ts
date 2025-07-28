@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IonApp, IonMenu, IonSplitPane, IonList, IonContent, IonListHeader, IonItem, IonLabel } from "@ionic/angular/standalone";
-import { IonRouterOutlet } from "../../../../node_modules/@ionic/angular/standalone/navigation/router-outlet";
+import { IonRouterOutlet } from "@ionic/angular/standalone";
 import {  } from 'src/app/app.routes';
 
 @Component({
