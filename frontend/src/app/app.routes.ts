@@ -25,7 +25,7 @@ export const routes: Routes = [
   },
   {
     path: 'protegida',
-    //canActivateChild : [authenticatedGuard],
+    canActivateChild : [authenticatedGuard],
     loadComponent: () => import('./layouts/authed/authed.layout').then((m) => m.AuthedLayout),
     children: [
       {

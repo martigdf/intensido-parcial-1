@@ -6,7 +6,7 @@ import { LocalidadUsuario } from '../../../schemas/localidad.js';
 
 const usuariosRoutes: FastifyPluginAsyncTypebox = async (fastify, opts): Promise<void> => {
 
-  fastify.get('/', {
+  fastify.get('/:id_usuario', {
     schema: {
       tags: ["usuarios"],
       summary: "Obtener usuario",

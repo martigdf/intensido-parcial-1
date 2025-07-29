@@ -19,10 +19,10 @@ export class UsuariosService {
   }
 
   async crear(usuario: User){ 
-    return firstValueFrom(this.httpClient.post<User>(this.url,usuario));
+    return firstValueFrom(this.httpClient.patch<User>(this.url + "/register", usuario));
   }
 
-   async getById(id_usuario:number){
+  async getById(id_usuario:number){
     return firstValueFrom(this.httpClient.get<User>(this.url+"/"+id_usuario));
   }
 }
