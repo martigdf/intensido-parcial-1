@@ -1,6 +1,8 @@
 import { FastifyPluginAsyncTypebox } from '@fastify/type-provider-typebox';
 import { usuarioRepository } from '../../../services/usuario.repository.js';
 import { Usuario, UsuarioId, UsuarioIdType } from '../../../schemas/usuario.js';
+import { DepartamentoIdType, DepartamentoId, DepartamentoUsuarioIdType, DepartamentoUsuarioId } from '../../../schemas/departamento.js';
+import { LocalidadUsuario } from '../../../schemas/localidad.js';
 
 const usuariosRoutes: FastifyPluginAsyncTypebox = async (fastify, opts): Promise<void> => {
 
@@ -34,6 +36,16 @@ const usuariosRoutes: FastifyPluginAsyncTypebox = async (fastify, opts): Promise
       tags: ["usuarios"],
       summary: "Obtener deptos usuario",
       description : "Obtener departamentos del usuario",
+      params: UsuarioId,
+      response: {
+        200: {
+          type: "object",
+          properties: UsuarioId.properties,
+        },
+        404: {
+          description: "Usuario no encontrado",
+        },
+      },
       security: [
         { bearerAuth: [] }
       ]
@@ -49,12 +61,23 @@ const usuariosRoutes: FastifyPluginAsyncTypebox = async (fastify, opts): Promise
       tags: ["usuarios"],
       summary: "Localidades usuario.",
       description : "Obtener las localidades de un determinado departamento del usuario",
+      params: DepartamentoUsuarioId,
+      response: {
+        200: {
+          type: "object",
+          properties: DepartamentoUsuarioId.properties,
+        },
+        404: {
+          description: "Localidades no encontradas",
+        },
+      },
       security: [
         { bearerAuth: [] }
       ]
     },
     handler: async function (request, reply) {
-      throw new Error("No implementado");
+      const { id_usuario, id_departamento } = request.params as DepartamentoUsuarioIdType 
+      return usuarioRepository.getLocalidades(id_departamento, id_usuario);
     }
   })
   
@@ -63,12 +86,27 @@ const usuariosRoutes: FastifyPluginAsyncTypebox = async (fastify, opts): Promise
       tags: ["usuarios"],
       summary: "Crear Localidad",
       description : "Crear una localidad asignada a un usuario.",
+      params: LocalidadUsuario,
+      response: {
+        200: {
+          type: "object",
+          properties: LocalidadUsuario.properties,
+        },
+        501: {
+          description: "Error al crear localidades a un usuario",
+          type: "object",
+          properties: {
+            message: { type: "string" },
+          },
+        },
+      },
       security: [
         { bearerAuth: [] }
       ]
     },
     handler: async function (request, reply) {
-      throw new Error("No implementado");
+      const localidad = request.params as LocalidadUsuario
+      return usuarioRepository.addLocalidad(localidad);
     }
   })
 
@@ -77,12 +115,14 @@ const usuariosRoutes: FastifyPluginAsyncTypebox = async (fastify, opts): Promise
       tags: ["usuarios"],
       summary: "Borrar localidad",
       description : "Borrar localidad.",
+
       security: [
         { bearerAuth: [] }
       ]
     },
     handler: async function (request, reply) {
-      throw new Error("No implementado");
+      const { id_departamento, id_localidad, id_usuario } = request.params as LocalidadUsuario
+      return usuarioRepository.removeLocalidad(id_departamento, id_localidad, id_usuario);
     }
   })
 

@@ -10,14 +10,13 @@ const departamentoRoutes: FastifyPluginAsyncTypebox = async (fastify, opts): Pro
       tags: ["departamentos"],
       summary: "Obtener listado de departamentos",
       description : "Obtener listado de departamentos",
-      params: DepartamentoId,
       response: {
         200: {
           type: "object",
-          properties: Departamento.properties,
+          description: "Lista de departamentos"
           },
           404: {
-        description: "Usuario no encontrado",
+        description: "Departamento no encontrado",
         },
       },
       security: [
@@ -34,9 +33,12 @@ const departamentoRoutes: FastifyPluginAsyncTypebox = async (fastify, opts): Pro
       tags: ["departamentos"],
       summary: "Obtener listado de departamentos",
       description : "Obtener listado de departamentos",
-      params: Type.Object({id_departamento : Type.Integer()}),
+      params: DepartamentoId,
       response : {
-        200 : Departamento
+        200 : DepartamentoId,
+        404: {
+        description: "Listado de departamentos no encontrado",
+        },
       },
       security: [
         { bearerAuth: [] }
@@ -52,6 +54,16 @@ const departamentoRoutes: FastifyPluginAsyncTypebox = async (fastify, opts): Pro
     schema: {
       tags: ["departamentos"],
       summary: "Obtener listado de departamentos",
+      params: DepartamentoId,
+      response: {
+        200: {
+          type: "object",
+          properties: Departamento.properties,
+          },
+          404: {
+        description: "lista de Departamentos no encontrado",
+        },
+      },
       description : "Obtener listado de departamentos",
       security: [
         { bearerAuth: [] }
