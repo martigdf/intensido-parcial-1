@@ -1,7 +1,6 @@
 import { FastifyPluginAsyncTypebox } from '@fastify/type-provider-typebox';
 import { departamentoRepository } from '../../services/departamentos.repository.js';
 import { Departamento, DepartamentoId, DepartamentoIdType } from '../../schemas/departamento.js';
-import { Type } from '@sinclair/typebox';
 
 const departamentoRoutes: FastifyPluginAsyncTypebox = async (fastify, opts): Promise<void> => {
 
@@ -23,6 +22,7 @@ const departamentoRoutes: FastifyPluginAsyncTypebox = async (fastify, opts): Pro
         { bearerAuth: [] }
       ]
     },
+    onRequest: fastify.authenticate,
     handler: async function (request, reply) {
       return departamentoRepository.getAll();
     }
@@ -69,6 +69,7 @@ const departamentoRoutes: FastifyPluginAsyncTypebox = async (fastify, opts): Pro
         { bearerAuth: [] }
       ]
     },
+    onRequest: fastify.authenticate,
     handler: async function (request, reply) {
       const { id_departamento } = request.params as DepartamentoIdType
       return departamentoRepository.getLocalidades(id_departamento);
